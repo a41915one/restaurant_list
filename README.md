@@ -1,11 +1,14 @@
-## Lists
+## Restaurant List
 
 功能描述(features)
 
 + 官網顯示出所有餐廳的簡單資料，包含圖片、名稱、評分、類別等
 + 點擊餐廳可以看到各餐廳詳細資訊
   - 大圖片
-  + 餐廳描述
+  + 類別
+  + 地址
+  + 電話
+  + 描述
 + 搜尋功能，依照餐廳名稱或分類關鍵字搜尋，呈現有相同字的餐廳
 
 
@@ -23,8 +26,20 @@
 
 1. 請先確認有安裝node.js 與 npm
 2. 將此專案clone到本地
-3. 在終端機上安裝express，輸入npm i express@4.16.4
-4. 在終端機上安裝express-handlebars，輸入 npm i express-handlebars@3.0.0
-5. 在終端機上啟動伺服器，輸入nodemon app.js
-6. 終端機顯示以下字樣，表示成功啟動 Express is listening on localhost:3000
+3. 在終端機上安裝express
+```
+npm install express@4.16.4
+```
+4. 在終端機上安裝express-handlebars，輸入 
+```
+npm i express-handlebars@3.0.0
+```
+5. 在終端機上啟動伺服器，輸入
+```
+nodemon app.js
+```
 
+6. 終端機顯示以下字樣，表示成功啟動
+```
+Express is listening on localhost:3000
+```
