@@ -13,7 +13,7 @@
 
 | Option | Description |
 | ------ | ----------- |
-| Node.js   | @14.6.0 |
+| Node.js   | @14.16.0 |
 | express | @4.16.4 |
 | express-handlebars | @3.0.0 |
 | bootstrap | @5.1.3 |
