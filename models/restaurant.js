@@ -2,35 +2,35 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const restaurantSchema = new Schema({
   id: {
-    type: text,
+    type: String,
     required: true,
   },
   name: {
-    type: text,
+    type: String,
     required: true,
   },
   name_en: {
-    type: text,
+    type: String,
     required: true,
   },
   category: {
-    type: text,
+    type: String,
     required: true,
   },
   image: {
-    type: text,
+    type: String,
     required: true,
   },
   location: {
-    type: text,
+    type: String,
     required: true,
   },
   phone: {
-    type: text,
+    type: String,
     required: true,
   },
   google_map: {
-    type: text,
+    type: String,
     required: true,
   },
   rating: {
@@ -38,10 +38,10 @@ const restaurantSchema = new Schema({
     required: true,
   },
   description: {
-    type: text,
+    type: String,
     required: true,
   },
 
 })
 
-module.exports = mongoose.models('Restaurant', restaurantSchema)
+module.exports = mongoose.model('Restaurant', restaurantSchema)
