@@ -42,19 +42,10 @@ app.get('/', (req, res) => {
 //  res.render('show', { restaurant: restaurant })
 //})
 
-app.get('/restaurants/:id', (req, res) => {
-  const id = req.params.id
-  Restaurant.findById(id)
-    .lean()
-    .then((restaurant) => res.render('show', { restaurant }))
-    .catch(error => console.log(error))
-})
-
-
 app.get('/search', (req, res) => {
-    if (!req.query.keywords){
-      res.redirect('/')
-    }
+  if (!req.query.keywords) {
+    res.redirect('/')
+  }
   const keywords = req.query.keywords
   const keyword = req.query.keywords.trim().toLowerCase()
 
@@ -75,9 +66,26 @@ app.get('/search', (req, res) => {
   //res.render('index', { restaurants: restaurant })
 })
 
-app.get('/restaurants/new', (req, res) =>{
+app.get('/restaurants/new', (req, res) => {
   res.render('new')
 })
+
+
+app.get('/restaurants/:restaurantId', (req, res) => {
+  const { restaurantId } = req.params
+  Restaurant.findById(restaurantId)
+    .lean()
+    .then((restaurantData) => res.render('show', { restaurantData }))
+    .catch(error => console.log(error))
+})
+
+app.post('/restaurants',(req, res) =>{
+  Restaurant.create(req.body)
+  .then(() => res.redirect('/'))
+  .catch(err => console.log(err))
+})
+
+
 
 
 
