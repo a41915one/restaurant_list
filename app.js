@@ -1,11 +1,12 @@
 const express = require('express')
+const methodOverride = require("method-override")
 const app = express()
 const port = 3000
 const exphbs = require('express-handlebars')
 //const restaurantList = require('./restaurant.json')
 const Restaurant = require('./models/restaurant')
 const mongoose = require('mongoose')
-const restaurant = require('./models/restaurant')
+//const restaurant = require('./models/restaurant')
 //假設非Production正式機情況下才載入dotenv環境變數
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
@@ -60,10 +61,6 @@ app.get('/search', (req, res) => {
       res.render('index', { restaurantData: filterRestaurantsData, keywords })
     })
     .catch(err => console.log(err))
-  //const restaurant = restaurantList.results.filter(restaurant => {
-  //  return restaurant.name.toLowerCase().includes(keyword.toLowerCase()) || restaurant.category.toLowerCase().includes(keyword.toLowerCase())
-  //})
-  //res.render('index', { restaurants: restaurant })
 })
 
 app.get('/restaurants/new', (req, res) => {
@@ -79,12 +76,27 @@ app.get('/restaurants/:restaurantId', (req, res) => {
     .catch(error => console.log(error))
 })
 
-app.post('/restaurants',(req, res) =>{
+app.post('/restaurants', (req, res) => {
   Restaurant.create(req.body)
-  .then(() => res.redirect('/'))
-  .catch(err => console.log(err))
+    .then(() => res.redirect('/'))
+    .catch(err => console.log(err))
 })
 
+
+app.get('/restaurants/:restaurantId/edit', (req, res) => {
+  const { restaurantId } = req.params
+  Restaurant.findById(restaurantId)
+    .lean()
+    .then(restaurantData => res.render('edit', { restaurantData }))
+    .catch(err => console.log(err))
+})
+
+app.put('/restaurants/:restaurantId/', (req, res) => {
+  const { restaurantId } = req.params
+  Restaurant.findByIdAndUpdate(restaurantId, req.body, { new: true })
+    .then(restaurantData => res.redirect(`/restaurants/${restaurantId}`))
+    .catch(err => console.log(err))
+})
 
 
 
