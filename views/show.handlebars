@@ -35,7 +35,18 @@
       </p>
 
       <img class="rounded mx-auto d-block mb-4 w-100" src="{{restaurantData.image}}" alt="{{restaurantData.name}}"
-        style="max-width: 600px;"/>
+        style="max-width: 600px;" />
+
+      <div class="mb-5 mt-5">
+        <div>
+          <a href="/"><button class="btn btn-primary">返回餐廳列表</button></a>
+        </div>
+        <a href="/restaurants/{{restaurantData._id}}/edit"><button class="btn btn-link btn-sm">Edit</button></a>
+      </div>
+      <div>
+        <form action="/restaurants/{{restaurantData._id}}?_method=DELETE" method="post">
+          <button type="submit" class="btn btn-danger btn-sm text-white mt-3 mb-3">delete</button>
+      </div>
     </div>
   </div>
 </div>

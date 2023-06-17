@@ -3,6 +3,7 @@ const methodOverride = require("method-override")
 const app = express()
 const port = 3000
 const exphbs = require('express-handlebars')
+const bodyParser = require('body-parser')
 //const restaurantList = require('./restaurant.json')
 const Restaurant = require('./models/restaurant')
 const mongoose = require('mongoose')
@@ -26,6 +27,10 @@ db.once('open', () => {
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
+app.use(express.static('public'))
+
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(methodOverride("_method"));
 
 app.get('/', (req, res) => {
   Restaurant.find()
@@ -45,12 +50,12 @@ app.get('/', (req, res) => {
 
 app.get('/search', (req, res) => {
   if (!req.query.keywords) {
-    res.redirect('/')
+    return res.redirect('/')
   }
   const keywords = req.query.keywords
   const keyword = req.query.keywords.trim().toLowerCase()
 
-  Restaurant.find({})
+  return Restaurant.find({})
     .lean()
     .then(restaurantData => {
       const filterRestaurantsData = restaurantData.filter(
@@ -70,22 +75,44 @@ app.get('/restaurants/new', (req, res) => {
 
 app.get('/restaurants/:restaurantId', (req, res) => {
   const { restaurantId } = req.params
-  Restaurant.findById(restaurantId)
+  return Restaurant.findById(restaurantId)
     .lean()
     .then((restaurantData) => res.render('show', { restaurantData }))
     .catch(error => console.log(error))
 })
 
 app.post('/restaurants', (req, res) => {
-  Restaurant.create(req.body)
+  const { name, name_en, category, location, image, rating, phone, google_map, description } = req.body;
+
+  if (!name || !name_en || !category || !location || !image || !rating || !phone || !google_map || !description) {
+    return res.send('<script>alert("請填寫每一個欄位"); window.history.back();</script>');
+  }
+
+  return Restaurant.create({ name, name_en, category, location, image, rating, phone, google_map, description })
     .then(() => res.redirect('/'))
-    .catch(err => console.log(err))
-})
+    .catch(err => console.log(err));
+});
+
+// app.post('/restaurants', (req, res) => {
+//   const name = req.body.name
+//   const name_en = req.body.name_en
+//   const category = req.body.category
+//   const location = req.body.location
+//   const image = req.body.image
+//   const rating = req.body.rating
+//   const phone = req.body.phone
+//   const google_map = req.body.google_map
+//   const description = req.body.description
+//   //console.log('Received category:', category)
+//   return Restaurant.create({ name, name_en, category, location, image, rating, phone, google_map, description })
+//     .then(() => res.redirect('/'))
+//     .catch(err => console.log(err))
+// })
 
 
 app.get('/restaurants/:restaurantId/edit', (req, res) => {
   const { restaurantId } = req.params
-  Restaurant.findById(restaurantId)
+  return Restaurant.findById(restaurantId)
     .lean()
     .then(restaurantData => res.render('edit', { restaurantData }))
     .catch(err => console.log(err))
@@ -93,15 +120,22 @@ app.get('/restaurants/:restaurantId/edit', (req, res) => {
 
 app.put('/restaurants/:restaurantId/', (req, res) => {
   const { restaurantId } = req.params
-  Restaurant.findByIdAndUpdate(restaurantId, req.body, { new: true })
+  return Restaurant.findByIdAndUpdate(restaurantId, req.body, { new: true })
     .then(restaurantData => res.redirect(`/restaurants/${restaurantId}`))
     .catch(err => console.log(err))
+})
+
+app.delete('/restaurants/:restaurantId', (req, res) => {
+  const restaurantId = req.params.restaurantId;
+  return Restaurant.findByIdAndDelete(restaurantId)
+    .then(() => res.redirect('/'))
+    .catch((err) => console.log(err))
 })
 
 
 
 
-app.use(express.static('public'))
+
 
 app.listen(port, () => {
   console.log(`Express is listening on localhost:${port} `)
