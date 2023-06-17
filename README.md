@@ -1,5 +1,7 @@
 ## Restaurant List
 
+![image](https://raw.githubusercontent.com/a41915one/restaurant_list/main/restaurant_list_ReadMepicture.PNG)
+
 功能描述(features)
 
 + 官網顯示出所有餐廳的簡單資料，包含圖片、名稱、評分、類別等
@@ -10,6 +12,9 @@
   + 電話
   + 描述
 + 搜尋功能，依照餐廳名稱或分類關鍵字搜尋，呈現有相同字的餐廳
++ 刪除功能，刪除選定餐廳
++ 編輯功能，編輯選定餐廳的資訊
++ 新增功能，新增一間餐廳
 
 
 ## 環境建置與需求 (prerequisites)
@@ -20,6 +25,9 @@
 | express | @4.16.4 |
 | express-handlebars | @3.0.0 |
 | bootstrap | @5.1.3 |
+| method-override| @3.0.0 
+| mongoose | @5.9.7 |
+| body-parser | @1.20.2 |
 
 
 安裝與執行步驟(installation and execution)
