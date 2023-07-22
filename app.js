@@ -1,4 +1,5 @@
 const express = require('express')
+const session = require('express-session')
 const methodOverride = require("method-override")
 const routes = require('./routes')
 const app = express()
@@ -29,6 +30,11 @@ require('./config/mongoose')
 
 app.engine('handlebars', exphbs({ defaultLayout: 'main' }))
 app.set('view engine', 'handlebars')
+app.use(session({
+  secret: 'ThisIsMySecret',
+  resave: false,
+  saveUninitialized: true
+}))
 app.use(express.static('public'))
 
 app.use(bodyParser.urlencoded({ extended: true }))
