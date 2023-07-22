@@ -1,4 +1,5 @@
 const express = require('express')
+const passport = require('passport')
 const router = express.Router()
 // 引用 Restaurant model
 const Restaurant = require('../../models/restaurant')
@@ -14,16 +15,17 @@ router.get('/register', (req, res) => {
   res.render('register')
 })
 
-router.post('/login', (req, res) => {
-
-})
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/users/login'
+}))
 
 router.post('/register', (req, res) => {
   //取得註冊參數
   const { name, email, password, confirmPassword } = req.body
   //檢查使用者是否已經註冊
   User.findOne({ email })
-  //得到一筆Data叫user
+    //得到一筆Data叫user
     .then(user => {
       if (user) {
         console.log('User already exists.')
