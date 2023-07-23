@@ -37,7 +37,12 @@ const restaurantSchema = new Schema({
     type: String,
     required: true,
   },
-
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: 'User', //type 跟 ref 是一起設定的，去參照User的ObjectedId的意思
+    index: true, //index可以設定索引，增加查詢資料讀取效能
+    required: true,
+  }
 })
 
 module.exports = mongoose.model('Restaurant', restaurantSchema)
