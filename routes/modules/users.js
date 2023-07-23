@@ -49,10 +49,10 @@ router.post('/register', (req, res) => {
   //如果已經註冊，退回原本畫面
   //如果還沒註冊，寫入資料庫
 })
-
-module.exports = router
-
 router.get('/logout', (req, res) => {
   req.logout() //為Passport.js提供的函式，會幫助清除Session
   res.redirect('/users/login')
 })
+
+module.exports = router
+
