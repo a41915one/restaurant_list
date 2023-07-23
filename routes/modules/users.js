@@ -1,5 +1,6 @@
 const express = require('express')
 const passport = require('passport')
+const bcrypt = require('bcryptjs')
 const router = express.Router()
 // 引用 Restaurant model
 const Restaurant = require('../../models/restaurant')
@@ -54,11 +55,14 @@ router.post('/register', (req, res) => {
           confirmPassword
         })
       } else {
-        return User.create({
-          name,
-          email,
-          password
-        })
+        return bcrypt
+          .genSalt(10)
+          .then(salt => bcrypt.hash(password, salt))
+          .then(hash => User.create({
+            name,
+            email,
+            password: hash
+          }))
           //只要是請資料庫幫忙做的事情，因為是兩台不同伺服器，一定要等資料庫回傳結果，用.then等資料庫處理完再往下進行
           .then(() => res.redirect('/'))
           .catch(err => console.error('Create user into Data error!'))
