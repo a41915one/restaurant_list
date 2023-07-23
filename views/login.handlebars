@@ -2,6 +2,8 @@
   <div class="col-md-6 m-auto">
     <div class="card card-body">
       <h1 class="text-center mt-3">Login</h1>
+      {{!-- Handlebars的固定寫法，只要看到>，就會去partial資料夾找樣板 --}}
+      {{> message}}
       <form action="/users/login" method="POST">
         <div class="mb-3">
           <label for="email" class="mb-2">Email</label>

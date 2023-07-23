@@ -4,6 +4,7 @@ module.exports = {
     if (req.isAuthenticated()){
       return next() //如果True，就會執行下個middleware
     }
+    req.flash('warning_msg','請先登入才能使用')
     res.redirect('/users/login')
   }
 }
