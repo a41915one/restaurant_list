@@ -6,7 +6,7 @@ const router = express.Router()
 const Restaurant = require('../../models/restaurant')
 // 引用 User model
 const User = require('../../models/user')
-//const { use } = require('./home')
+const { authenticator } = require('../../middleware/auth')
 
 router.get('/login', (req, res) => {
   res.render('login', { warning_msg: req.flash('warning_msg') });
@@ -14,7 +14,7 @@ router.get('/login', (req, res) => {
 
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
-  failureRedirect: '/users/login',
+  failureRedirect: '/login',
   failureFlash: true
 }))
 
