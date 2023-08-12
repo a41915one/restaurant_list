@@ -1,9 +1,14 @@
 ## Restaurant List
 
-![image](https://raw.githubusercontent.com/a41915one/restaurant_list/main/restaurant_list_ReadMepicture.PNG)
+![image](https://raw.githubusercontent.com/a41915one/restaurant_list/main/restaurant_list_ReadMepicture_v2.PNG)
 
 功能描述(features)
 
++ 註冊、登入、登出功能
+  - Email及密碼即可註冊
+  + 登出及註冊失敗時顯示相關訊息於網頁上
+  + 帳號各自擁有自己的餐廳資料
+  + 支援Facebook註冊功能
 + 官網顯示出所有餐廳的簡單資料，包含圖片、名稱、評分、類別等
 + 點擊餐廳可以看到各餐廳詳細資訊
   - 大圖片
@@ -22,7 +27,7 @@
 | Option | Description |
 | ------ | ----------- |
 | Node.js   | @14.16.0 |
-| express | @4.16.4 |
+| express | @4.18.2 |
 | express-handlebars | @3.0.0 |
 | bootstrap | @5.1.3 |
 | method-override| @3.0.0 
@@ -36,7 +41,7 @@
 2. 將此專案clone到本地
 3. 在終端機上安裝express
 ```
-npm install express@4.16.4
+npm install express@4.18.2
 ```
 4. 在終端機上安裝express-handlebars，輸入 
 ```
