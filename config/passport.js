@@ -42,7 +42,7 @@ module.exports = app => {
         bcrypt
           .genSalt(10)
           .then(salt => bcrypt.hash(randomPassword, salt))
-          .then(hash = User.create({
+          .then(hash => User.create({
             name,
             email,
             password: hash
