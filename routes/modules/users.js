@@ -9,17 +9,19 @@ const User = require('../../models/user')
 //const { use } = require('./home')
 
 router.get('/login', (req, res) => {
-  res.render('login')
-})
+  res.render('login', { warning_msg: req.flash('warning_msg') });
+});
+
+router.post('/login', passport.authenticate('local', {
+  successRedirect: '/',
+  failureRedirect: '/users/login',
+  failureFlash: true
+}))
+
 
 router.get('/register', (req, res) => {
   res.render('register')
 })
-
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/users/login'
-}))
 
 router.post('/register', (req, res) => {
   //取得註冊參數
@@ -49,33 +51,32 @@ router.post('/register', (req, res) => {
         errors.push({ message: '此 Email 已經註冊過了！' })
         console.log('User already exists.')
         return res.render('register', {
+          errors,
           name,
           email,
           password,
           confirmPassword
         })
-      } else {
-        return bcrypt
-          .genSalt(10)
-          .then(salt => bcrypt.hash(password, salt))
-          .then(hash => User.create({
-            name,
-            email,
-            password: hash
-          }))
-          //只要是請資料庫幫忙做的事情，因為是兩台不同伺服器，一定要等資料庫回傳結果，用.then等資料庫處理完再往下進行
-          .then(() => res.redirect('/'))
-          .catch(err => console.error('Create user into Data error!'))
       }
+      return bcrypt
+        .genSalt(10)
+        .then(salt => bcrypt.hash(password, salt))
+        .then(hash => User.create({
+          name,
+          email,
+          password: hash
+        }))
+        //只要是請資料庫幫忙做的事情，因為是兩台不同伺服器，一定要等資料庫回傳結果，用.then等資料庫處理完再往下進行
+        .then(() => res.redirect('/'))
+        .catch(err => console.error('Create user into Data error!'))
     })
   //如果已經註冊，退回原本畫面
   //如果還沒註冊，寫入資料庫
 })
 router.get('/logout', (req, res) => {
-  req.logout() //為Passport.js提供的函式，會幫助清除Session
+  req.logout()
   req.flash('success_msg', '已成功登出！')
   res.redirect('/users/login')
 })
-
 module.exports = router
 
