@@ -9,7 +9,7 @@ const User = require('../../models/user')
 const { authenticator } = require('../../middleware/auth')
 
 router.get('/login', (req, res) => {
-  res.render('login', { warning_msg: req.flash('warning_msg') });
+  res.render('login')
 });
 
 router.post('/login', passport.authenticate('local', {
